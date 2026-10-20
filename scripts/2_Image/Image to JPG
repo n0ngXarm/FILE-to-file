@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec "/home/nong_ing/Projects/FILE-to-file/scripts/run_action.sh" "core.image_converter" "to_jpg" "$@"

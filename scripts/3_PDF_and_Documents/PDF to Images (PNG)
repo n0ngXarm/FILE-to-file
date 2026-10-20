@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec "/home/nong_ing/Projects/FILE-to-file/scripts/run_action.sh" "core.pdf_doc" "pdf_to_png" "$@"
