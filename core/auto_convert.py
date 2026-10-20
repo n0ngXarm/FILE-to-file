@@ -4,6 +4,7 @@ import shutil
 import subprocess
 from pathlib import Path
 from core.notify import send_notification, show_error_dialog
+from core.ui_dialog import select_target_format
 
 def detect_file_type(file_path: str) -> dict:
     """
@@ -158,7 +159,7 @@ def auto_convert_files(files: list):
     if is_multiple:
         display_name += f" (และอีก {len(files) - 1} ไฟล์)"
 
-    choice = ask_user_choice_zenity(file_info, options, display_name)
+    choice = select_target_format(file_info, options, display_name)
     if not choice:
         # User canceled
         return
