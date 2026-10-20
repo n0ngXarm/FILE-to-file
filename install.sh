@@ -62,26 +62,30 @@ if [ -d "${LEGACY_DIR}" ]; then
 fi
 
 # 5. Copy direct 1-click Smart Auto script to Nautilus Scripts
-echo "🔗 กำลังติดตั้งเมนูคลิกขวา 1-Click Smart Auto เข้าสู่ Nautilus..."
+echo "🔗 กำลังติดตั้งเมนูคลิกขวา FILE-to-file เข้าสู่ Nautilus..."
 mkdir -p "${NAUTILUS_SCRIPTS_DIR}"
 
-cp -f "${SCRIPT_DIR}/scripts/⚡ แปลงไฟล์ (FILE-to-file)" "${NAUTILUS_SCRIPTS_DIR}/"
+# Clean up any old naming variants
+rm -f "${NAUTILUS_SCRIPTS_DIR}/⚡ แปลงไฟล์ (FILE-to-file)"
 rm -f "${NAUTILUS_SCRIPTS_DIR}/⚡ Convert File (FILE-to-file)"
+rm -f "${NAUTILUS_SCRIPTS_DIR}/⚡ Smart Auto Convert"
+
+cp -f "${SCRIPT_DIR}/scripts/FILE-to-file" "${NAUTILUS_SCRIPTS_DIR}/"
 
 # Set executable permissions
-chmod +x "${NAUTILUS_SCRIPTS_DIR}/⚡ แปลงไฟล์ (FILE-to-file)"
+chmod +x "${NAUTILUS_SCRIPTS_DIR}/FILE-to-file"
 chmod +x "${SCRIPT_DIR}/scripts/run_action.sh"
 chmod +x "${SCRIPT_DIR}/install.sh"
 chmod +x "${SCRIPT_DIR}/uninstall.sh"
 
 echo "=========================================================="
 echo "🎉 ติดตั้งสำเร็จเรียบร้อยแล้ว!"
-echo "📁 คำสั่งถูกติดตั้งไว้ที่: ${NAUTILUS_SCRIPTS_DIR}"
+echo "📁 คำสั่งถูกติดตั้งไว้ที่: ${NAUTILUS_SCRIPTS_DIR}/FILE-to-file"
 echo ""
 echo "🖱️  วิธีใช้งานง่าย ๆ ใน 1 คลิก:"
 echo "1. เปิดโปรแกรมจัดการไฟล์ (Nautilus)"
 echo "2. คลิกขวาที่ไฟล์ใดก็ได้"
-echo "3. เลือก 'Scripts' -> '⚡ แปลงไฟล์ (FILE-to-file)'"
+echo "3. เลือก 'Scripts' -> 'FILE-to-file'"
 echo "4. หน้าต่าง Smart Auto UI จะเปิดขึ้นมาให้เลือกฟอร์แมตและกดแปลงได้ทันที!"
 echo "=========================================================="
 

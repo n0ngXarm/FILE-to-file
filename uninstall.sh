@@ -6,8 +6,10 @@ CONFIG_DIR="${HOME}/.config/FILE-to-file"
 
 echo "🗑️  กำลังถอนการติดตั้ง FILE-to-file..."
 
+rm -f "${NAUTILUS_SCRIPTS_DIR}/FILE-to-file"
 rm -f "${NAUTILUS_SCRIPTS_DIR}/⚡ แปลงไฟล์ (FILE-to-file)"
 rm -f "${NAUTILUS_SCRIPTS_DIR}/⚡ Convert File (FILE-to-file)"
+rm -f "${NAUTILUS_SCRIPTS_DIR}/⚡ Smart Auto Convert"
 
 if [ -d "${TARGET_DIR}" ]; then
     rm -rf "${TARGET_DIR}"
