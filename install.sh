@@ -12,6 +12,9 @@ echo "============================================="
 # Ensure target scripts directory exists
 mkdir -p "${TARGET_DIR}"
 
+# Copy Auto Convert script
+cp -f "${PROJECT_DIR}/scripts/⚡ Smart Auto Convert" "${TARGET_DIR}/"
+
 # Copy category folders
 cp -r "${PROJECT_DIR}/scripts/1_Video_and_Audio" "${TARGET_DIR}/"
 cp -r "${PROJECT_DIR}/scripts/2_Image" "${TARGET_DIR}/"

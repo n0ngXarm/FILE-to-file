@@ -108,5 +108,22 @@ class TestFileConverters(unittest.TestCase):
         self.assertTrue(os.path.exists(mp4_out))
         self.assertGreater(os.path.getsize(mp4_out), 0)
 
+    def test_auto_detect(self):
+        from core.auto_convert import detect_file_type, get_options_for_category
+        # Test image detect
+        img_path = os.path.join(self.test_dir, "test.png")
+        Image.new("RGB", (10, 10)).save(img_path)
+        info = detect_file_type(img_path)
+        self.assertEqual(info["category"], "image")
+        opts = get_options_for_category(info["category"], is_multiple=False)
+        self.assertTrue(any(opt[0] == "webp" for opt in opts))
+
+        # Test text/doc detect
+        txt_path = os.path.join(self.test_dir, "test.txt")
+        with open(txt_path, "w") as f:
+            f.write("test text")
+        info_txt = detect_file_type(txt_path)
+        self.assertEqual(info_txt["category"], "office")
+
 if __name__ == "__main__":
     unittest.main()
