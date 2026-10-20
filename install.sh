@@ -7,7 +7,8 @@ set -e
 
 # Detect current project location
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-TARGET_DIR="${HOME}/.local/share/nautilus/scripts/FILE-to-file"
+NAUTILUS_SCRIPTS_DIR="${HOME}/.local/share/nautilus/scripts"
+LEGACY_DIR="${NAUTILUS_SCRIPTS_DIR}/FILE-to-file"
 CONFIG_DIR="${HOME}/.config/FILE-to-file"
 
 echo "=========================================================="
@@ -54,37 +55,35 @@ fi
 echo "📦 กำลังตรวจสอบ Python packages..."
 python3 -m pip install --quiet -r "${SCRIPT_DIR}/requirements.txt" 2>/dev/null || true
 
-# 4. Copy scripts to Nautilus Scripts directory
-echo "🔗 กำลังเชื่อมต่อเข้าสู่ Nautilus Context Menu..."
-mkdir -p "${TARGET_DIR}"
+# 4. Clean up legacy nested folder if present
+if [ -d "${LEGACY_DIR}" ]; then
+    echo "🧹 กำลังเคลียร์โฟลเดอร์เมนูรุ่นเก่า..."
+    rm -rf "${LEGACY_DIR}"
+fi
 
-# Ensure script generation is up to date
-python3 "${SCRIPT_DIR}/scripts/generate_scripts.py" >/dev/null 2>&1 || true
+# 5. Copy direct 1-click Smart Auto script to Nautilus Scripts
+echo "🔗 กำลังติดตั้งเมนูคลิกขวา 1-Click Smart Auto เข้าสู่ Nautilus..."
+mkdir -p "${NAUTILUS_SCRIPTS_DIR}"
 
-# Copy Auto Convert script
-cp -f "${SCRIPT_DIR}/scripts/⚡ Smart Auto Convert" "${TARGET_DIR}/"
-
-# Copy category folders
-cp -r "${SCRIPT_DIR}/scripts/1_Video_and_Audio" "${TARGET_DIR}/"
-cp -r "${SCRIPT_DIR}/scripts/2_Image" "${TARGET_DIR}/"
-cp -r "${SCRIPT_DIR}/scripts/3_PDF_and_Documents" "${TARGET_DIR}/"
-cp -r "${SCRIPT_DIR}/scripts/4_GIF" "${TARGET_DIR}/"
+cp -f "${SCRIPT_DIR}/scripts/⚡ แปลงไฟล์ (FILE-to-file)" "${NAUTILUS_SCRIPTS_DIR}/"
+cp -f "${SCRIPT_DIR}/scripts/⚡ Convert File (FILE-to-file)" "${NAUTILUS_SCRIPTS_DIR}/"
 
 # Set executable permissions
-find "${TARGET_DIR}" -type f -exec chmod +x {} +
+chmod +x "${NAUTILUS_SCRIPTS_DIR}/⚡ แปลงไฟล์ (FILE-to-file)"
+chmod +x "${NAUTILUS_SCRIPTS_DIR}/⚡ Convert File (FILE-to-file)"
 chmod +x "${SCRIPT_DIR}/scripts/run_action.sh"
 chmod +x "${SCRIPT_DIR}/install.sh"
 chmod +x "${SCRIPT_DIR}/uninstall.sh"
 
 echo "=========================================================="
 echo "🎉 ติดตั้งสำเร็จเรียบร้อยแล้ว!"
-echo "📁 เมนูถูกติดตั้งไว้ที่: ${TARGET_DIR}"
+echo "📁 คำสั่งถูกติดตั้งไว้ที่: ${NAUTILUS_SCRIPTS_DIR}"
 echo ""
-echo "🖱️  วิธีใช้งาน:"
+echo "🖱️  วิธีใช้งานง่าย ๆ ใน 1 คลิก:"
 echo "1. เปิดโปรแกรมจัดการไฟล์ (Nautilus)"
 echo "2. คลิกขวาที่ไฟล์ใดก็ได้"
-echo "3. เลือกเมนู 'Scripts' -> 'FILE-to-file'"
-echo "4. เลือก '⚡ Smart Auto Convert' หรือเลือกตามหมวดหมู่ได้ทันที!"
+echo "3. เลือก 'Scripts' -> '⚡ แปลงไฟล์ (FILE-to-file)'"
+echo "4. หน้าต่าง Smart Auto UI จะเปิดขึ้นมาให้เลือกฟอร์แมตและกดแปลงได้ทันที!"
 echo "=========================================================="
 
 if which notify-send >/dev/null 2>&1; then

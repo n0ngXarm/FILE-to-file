@@ -32,17 +32,13 @@
 
 ---
 
-### 📂 หมวดหมู่ที่รองรับ
+### 📂 การใช้งานใน 1 คลิกผ่านเมนูคลิกขวา (Clean & Zero Clutter)
 
 ```text
-📁 FILE-to-file (คลิกขวา -> Scripts)
- ├── ⚡ Smart Auto Convert (วิเคราะห์และแปลงอัตโนมัติ)
- ├── 🎬 1_Video_and_Audio/
- ├── 🖼️ 2_Image/
- ├── 📄 3_PDF_and_Documents/
- └── 🎞️ 4_GIF/
+เลือกไฟล์ -> คลิกขวา -> Scripts -> ⚡ แปลงไฟล์ (FILE-to-file)
 ```
 
+เมื่อกดใช้งาน ระบบจะเปิดหน้าต่าง **Smart Auto UI (Libadwaita)** ขึ้นมาทันที พร้อมตรวจจับประเภทไฟล์และมีตัวเลือกแปลงครอบคลุมทั้ง 4 หมวด:
 1. **🎬 Video & Audio**: แปลงวิดีโอ (MP4, MKV, AVI, MOV), ดูดเสียงเป็น MP3, แปลงเสียง Lossless WAV, OGG, MOV to MP4
 2. **🖼️ Image**: แปลง PNG, JPG, WebP, ICO, JFIF to PNG, ภาพถ่าย iPhone (HEIC to JPG/PNG), เวกเตอร์ SVG $\leftrightarrow$ PNG
 3. **📄 PDF & Documents**: แปลง PDF เป็น Word (.docx) แก้ไขได้, PDF เป็นรูปภาพ, รวมรูปภาพหลายไฟล์เป็น PDF, แปลง Word/Office/Text เป็น PDF, E-book EPUB
@@ -72,8 +68,9 @@ cd FILE-to-file
 ### 🖱️ วิธีใช้งาน
 1. เปิด **Files (Nautilus)**
 2. คลิกขวาที่ไฟล์ที่ต้องการ (เลือกไฟล์เดียวหรือหลายไฟล์พร้อมกันก็ได้)
-3. เลือก **Scripts** $\rightarrow$ **FILE-to-file** $\rightarrow$ เลือกคำสั่งที่ต้องการ
-4. ไฟล์ผลลัพธ์จะถูกสร้างขึ้นในโฟลเดอร์เดียวกันทันที!
+3. เลือก **Scripts** $\rightarrow$ **⚡ แปลงไฟล์ (FILE-to-file)**
+4. หน้าต่าง **Smart Auto UI** จะเปิดขึ้นมาพร้อมตรวจจับประเภทไฟล์และแสดงตัวเลือก ให้เลือกฟอร์แมตแล้วกด **"เริ่มแปลงไฟล์ทันที"**
+5. ไฟล์ผลลัพธ์จะถูกสร้างขึ้นในโฟลเดอร์เดียวกันทันที!
 
 ---
 
