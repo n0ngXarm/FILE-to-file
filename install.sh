@@ -66,11 +66,10 @@ echo "🔗 กำลังติดตั้งเมนูคลิกขวา
 mkdir -p "${NAUTILUS_SCRIPTS_DIR}"
 
 cp -f "${SCRIPT_DIR}/scripts/⚡ แปลงไฟล์ (FILE-to-file)" "${NAUTILUS_SCRIPTS_DIR}/"
-cp -f "${SCRIPT_DIR}/scripts/⚡ Convert File (FILE-to-file)" "${NAUTILUS_SCRIPTS_DIR}/"
+rm -f "${NAUTILUS_SCRIPTS_DIR}/⚡ Convert File (FILE-to-file)"
 
 # Set executable permissions
 chmod +x "${NAUTILUS_SCRIPTS_DIR}/⚡ แปลงไฟล์ (FILE-to-file)"
-chmod +x "${NAUTILUS_SCRIPTS_DIR}/⚡ Convert File (FILE-to-file)"
 chmod +x "${SCRIPT_DIR}/scripts/run_action.sh"
 chmod +x "${SCRIPT_DIR}/install.sh"
 chmod +x "${SCRIPT_DIR}/uninstall.sh"
