@@ -4,6 +4,7 @@ import shutil
 import subprocess
 from pathlib import Path
 from core.notify import send_notification, show_error_dialog
+from core.utils import get_unique_output_path
 
 def _check_ffmpeg():
     if not shutil.which("ffmpeg"):
@@ -11,10 +12,11 @@ def _check_ffmpeg():
 
 def video_to_mp4(input_path: str) -> str:
     _check_ffmpeg()
-    src = Path(input_path)
+    src = Path(input_path).resolve()
     output_path = src.with_suffix(".mp4")
     if output_path == src:
         output_path = src.with_name(f"{src.stem}_converted.mp4")
+    output_path = get_unique_output_path(output_path)
     
     cmd = [
         "ffmpeg", "-y", "-i", str(src),
@@ -27,8 +29,8 @@ def video_to_mp4(input_path: str) -> str:
 
 def video_to_mp3(input_path: str) -> str:
     _check_ffmpeg()
-    src = Path(input_path)
-    output_path = src.with_suffix(".mp3")
+    src = Path(input_path).resolve()
+    output_path = get_unique_output_path(src.with_suffix(".mp3"))
     cmd = [
         "ffmpeg", "-y", "-i", str(src),
         "-vn", "-c:a", "libmp3lame", "-q:a", "2",
@@ -39,10 +41,11 @@ def video_to_mp3(input_path: str) -> str:
 
 def audio_to_format(input_path: str, fmt: str = "mp3") -> str:
     _check_ffmpeg()
-    src = Path(input_path)
+    src = Path(input_path).resolve()
     output_path = src.with_suffix(f".{fmt.lower()}")
     if output_path == src:
         output_path = src.with_name(f"{src.stem}_converted.{fmt.lower()}")
+    output_path = get_unique_output_path(output_path)
 
     fmt_lower = fmt.lower()
     if fmt_lower == "mp3":

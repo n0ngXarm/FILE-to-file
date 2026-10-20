@@ -5,11 +5,12 @@ import subprocess
 from pathlib import Path
 from PIL import Image
 from core.notify import send_notification, show_error_dialog
+from core.utils import get_unique_output_path
 
 def pdf_to_docx(input_path: str) -> str:
     """Converts PDF document to editable Word .docx format."""
-    src = Path(input_path)
-    output_path = src.with_suffix(".docx")
+    src = Path(input_path).resolve()
+    output_path = get_unique_output_path(src.with_suffix(".docx"))
 
     try:
         from pdf2docx import Converter
@@ -63,12 +64,15 @@ def images_to_pdf(image_paths: list, output_path: str = None) -> str:
     if not image_paths:
         raise ValueError("ไม่มีไฟล์รูปภาพให้รวม")
 
-    first_path = Path(image_paths[0])
+    first_path = Path(image_paths[0]).resolve()
     if not output_path:
         if len(image_paths) == 1:
-            output_path = str(first_path.with_suffix(".pdf"))
+            target = first_path.with_suffix(".pdf")
         else:
-            output_path = str(first_path.parent / f"Combined_{first_path.stem}.pdf")
+            target = first_path.parent / f"Combined_{first_path.stem}.pdf"
+        output_path = str(get_unique_output_path(target))
+    else:
+        output_path = str(get_unique_output_path(Path(output_path)))
 
     images = []
     first_image = None

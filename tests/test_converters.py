@@ -125,5 +125,22 @@ class TestFileConverters(unittest.TestCase):
         info_txt = detect_file_type(txt_path)
         self.assertEqual(info_txt["category"], "office")
 
+    def test_unique_output_path(self):
+        from core.utils import get_unique_output_path
+        target = Path(self.test_dir) / "output.txt"
+        # First time (does not exist)
+        res1 = get_unique_output_path(target)
+        self.assertEqual(res1, target)
+        res1.touch()
+
+        # Second time (already exists)
+        res2 = get_unique_output_path(target)
+        self.assertEqual(res2, Path(self.test_dir) / "output_1.txt")
+        res2.touch()
+
+        # Third time
+        res3 = get_unique_output_path(target)
+        self.assertEqual(res3, Path(self.test_dir) / "output_2.txt")
+
 if __name__ == "__main__":
     unittest.main()

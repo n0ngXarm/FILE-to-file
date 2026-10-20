@@ -5,6 +5,7 @@ import subprocess
 from pathlib import Path
 from PIL import Image
 from core.notify import send_notification, show_error_dialog
+from core.utils import get_unique_output_path
 
 def _check_ffmpeg():
     if not shutil.which("ffmpeg"):
@@ -13,8 +14,8 @@ def _check_ffmpeg():
 def video_to_gif(input_path: str, fps: int = 15, width: int = 480) -> str:
     """Converts video (MP4, WEBM, MOV, AVI, etc.) to high quality animated GIF."""
     _check_ffmpeg()
-    src = Path(input_path)
-    output_path = src.with_suffix(".gif")
+    src = Path(input_path).resolve()
+    output_path = get_unique_output_path(src.with_suffix(".gif"))
 
     filter_complex = f"fps={fps},scale={width}:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse"
     cmd = [
@@ -28,8 +29,8 @@ def video_to_gif(input_path: str, fps: int = 15, width: int = 480) -> str:
 def gif_to_mp4(input_path: str) -> str:
     """Converts animated GIF to MP4 video for efficient storage and playback."""
     _check_ffmpeg()
-    src = Path(input_path)
-    output_path = src.with_suffix(".mp4")
+    src = Path(input_path).resolve()
+    output_path = get_unique_output_path(src.with_suffix(".mp4"))
 
     cmd = [
         "ffmpeg", "-y", "-i", str(src),
@@ -46,9 +47,11 @@ def images_to_gif(image_paths: list, output_path: str = None, duration: int = 20
     if not image_paths:
         raise ValueError("ไม่มีไฟล์รูปภาพให้แปลง")
 
-    first_path = Path(image_paths[0])
+    first_path = Path(image_paths[0]).resolve()
     if not output_path:
-        output_path = str(first_path.parent / f"Animated_{first_path.stem}.gif")
+        output_path = str(get_unique_output_path(first_path.parent / f"Animated_{first_path.stem}.gif"))
+    else:
+        output_path = str(get_unique_output_path(Path(output_path)))
 
     frames = []
     first_frame = None

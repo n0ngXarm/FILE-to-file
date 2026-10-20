@@ -1,2 +1,11 @@
 #!/usr/bin/env bash
-exec "/home/nong_ing/Projects/FILE-to-file/scripts/run_action.sh" "core.pdf_doc" "pdf_to_png" "$@"
+# Dynamically locate FILE-to-file runner
+CONF="${HOME}/.config/FILE-to-file/path.conf"
+if [ -f "$CONF" ]; then
+    PROJECT_DIR="$(cat "$CONF")"
+    RUNNER="${PROJECT_DIR}/scripts/run_action.sh"
+else
+    RUNNER="${HOME}/.local/share/FILE-to-file/scripts/run_action.sh"
+fi
+
+exec "$RUNNER" "core.pdf_doc" "pdf_to_png" "$@"

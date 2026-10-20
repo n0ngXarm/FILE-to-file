@@ -5,6 +5,7 @@ import subprocess
 from pathlib import Path
 from PIL import Image
 from core.notify import send_notification, show_error_dialog
+from core.utils import get_unique_output_path
 
 def _ensure_rgb(img: Image.Image) -> Image.Image:
     """Converts RGBA or LA images to RGB with white background for formats like JPEG."""
@@ -20,10 +21,11 @@ def _ensure_rgb(img: Image.Image) -> Image.Image:
 
 def convert_image(input_path: str, target_format: str) -> str:
     target_ext = target_format.lower().lstrip(".")
-    src = Path(input_path)
+    src = Path(input_path).resolve()
     output_path = src.with_suffix(f".{target_ext}")
     if output_path == src:
         output_path = src.with_name(f"{src.stem}_converted.{target_ext}")
+    output_path = get_unique_output_path(output_path)
 
     # Check for HEIC
     if src.suffix.lower() in (".heic", ".heif"):
@@ -93,8 +95,8 @@ def heic_to_format(input_path: str, target_format: str = "jpg") -> str:
     raise RuntimeError("ไม่สามารถแปลงไฟล์ HEIC ได้ กรุณาติดตั้ง pillow-heif หรือ libheif")
 
 def png_to_svg(input_path: str) -> str:
-    src = Path(input_path)
-    output_path = src.with_suffix(".svg")
+    src = Path(input_path).resolve()
+    output_path = get_unique_output_path(src.with_suffix(".svg"))
 
     # If potrace is installed, vectorize cleanly
     if shutil.which("potrace"):

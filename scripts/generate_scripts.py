@@ -43,19 +43,44 @@ SCRIPTS = {
 }
 
 def generate():
-    runner_path = "/home/nong_ing/Projects/FILE-to-file/scripts/run_action.sh"
     for category, items in SCRIPTS.items():
         cat_dir = BASE_DIR / category
         cat_dir.mkdir(parents=True, exist_ok=True)
         for name, module, action in items:
             script_path = cat_dir / name
             content = f"""#!/usr/bin/env bash
-exec "{runner_path}" "{module}" "{action}" "$@"
+# Dynamically locate FILE-to-file runner
+CONF="${{HOME}}/.config/FILE-to-file/path.conf"
+if [ -f "$CONF" ]; then
+    PROJECT_DIR="$(cat "$CONF")"
+    RUNNER="${{PROJECT_DIR}}/scripts/run_action.sh"
+else
+    RUNNER="${{HOME}}/.local/share/FILE-to-file/scripts/run_action.sh"
+fi
+
+exec "$RUNNER" "{module}" "{action}" "$@"
 """
             with open(script_path, "w", encoding="utf-8") as f:
                 f.write(content)
             os.chmod(script_path, 0o755)
-            print(f"Created: {script_path}")
+
+    # Generate Smart Auto Convert script
+    auto_script = BASE_DIR / "⚡ Smart Auto Convert"
+    auto_content = """#!/usr/bin/env bash
+CONF="${HOME}/.config/FILE-to-file/path.conf"
+if [ -f "$CONF" ]; then
+    PROJECT_DIR="$(cat "$CONF")"
+    RUNNER="${PROJECT_DIR}/scripts/run_action.sh"
+else
+    RUNNER="${HOME}/.local/share/FILE-to-file/scripts/run_action.sh"
+fi
+
+exec "$RUNNER" "core.auto_convert" "auto" "$@"
+"""
+    with open(auto_script, "w", encoding="utf-8") as f:
+        f.write(auto_content)
+    os.chmod(auto_script, 0o755)
+    print("All scripts generated with dynamic path resolution.")
 
 if __name__ == "__main__":
     generate()

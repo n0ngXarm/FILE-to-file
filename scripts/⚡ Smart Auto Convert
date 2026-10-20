@@ -1,2 +1,10 @@
 #!/usr/bin/env bash
-exec "/home/nong_ing/Projects/FILE-to-file/scripts/run_action.sh" "core.auto_convert" "auto" "$@"
+CONF="${HOME}/.config/FILE-to-file/path.conf"
+if [ -f "$CONF" ]; then
+    PROJECT_DIR="$(cat "$CONF")"
+    RUNNER="${PROJECT_DIR}/scripts/run_action.sh"
+else
+    RUNNER="${HOME}/.local/share/FILE-to-file/scripts/run_action.sh"
+fi
+
+exec "$RUNNER" "core.auto_convert" "auto" "$@"
