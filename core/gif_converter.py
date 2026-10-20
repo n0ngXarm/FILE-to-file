@@ -109,7 +109,7 @@ def main():
     action = sys.argv[1]
     files = sys.argv[2:]
 
-    send_notification("🎞️ FILE-to-file: GIF", f"กำลังแปลง {len(files)} ไฟล์...")
+    send_notification("FILE-to-file: GIF", f"กำลังแปลง {len(files)} ไฟล์...")
 
     success_count = 0
     errors = []
@@ -117,7 +117,7 @@ def main():
     if action == "images_to_gif":
         try:
             out = images_to_gif(files)
-            send_notification("✅ FILE-to-file: GIF", f"สร้างภาพเคลื่อนไหว GIF สำเร็จ:\n{os.path.basename(out)}")
+            send_notification("FILE-to-file: GIF", f"สร้างภาพเคลื่อนไหว GIF สำเร็จ:\n{os.path.basename(out)}")
             return
         except Exception as e:
             show_error_dialog("ข้อผิดพลาดในการสร้าง GIF จากรูปภาพ", str(e))
@@ -144,7 +144,7 @@ def main():
     if errors:
         show_error_dialog("ข้อผิดพลาดในการแปลงไฟล์ GIF", "\n".join(errors))
     else:
-        send_notification("✅ FILE-to-file: GIF", f"แปลง GIF สำเร็จ {success_count} ไฟล์เรียบร้อยแล้ว!")
+        send_notification("FILE-to-file: GIF", f"แปลง GIF สำเร็จ {success_count} ไฟล์เรียบร้อยแล้ว")
 
 if __name__ == "__main__":
     main()

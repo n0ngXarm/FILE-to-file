@@ -156,7 +156,7 @@ def main():
     action = sys.argv[1]
     files = sys.argv[2:]
 
-    send_notification("🖼️ FILE-to-file: Image", f"กำลังแปลง {len(files)} รูปภาพ...")
+    send_notification("FILE-to-file: Image", f"กำลังแปลง {len(files)} รูปภาพ...")
 
     success_count = 0
     errors = []
@@ -191,7 +191,7 @@ def main():
     if errors:
         show_error_dialog("ข้อผิดพลาดในการแปลงรูปภาพ", "\n".join(errors))
     else:
-        send_notification("✅ FILE-to-file: Image", f"แปลงภาพสำเร็จ {success_count} ไฟล์เรียบร้อยแล้ว!")
+        send_notification("FILE-to-file: Image", f"แปลงภาพสำเร็จ {success_count} ไฟล์เรียบร้อยแล้ว")
 
 if __name__ == "__main__":
     main()

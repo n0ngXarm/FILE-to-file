@@ -121,7 +121,7 @@ def ask_user_choice_zenity(file_info: dict, options: list, filename: str) -> tup
 
     cmd = [
         "zenity", "--list", "--radiolist",
-        "--title=⚡ Smart Auto Convert",
+        "--title=Smart Auto Convert",
         f"--text=ตรวจพบ: <b>{file_info['desc']}</b>\nไฟล์: <i>{filename}</i>\n\nกรุณาเลือกรูปแบบที่ต้องการแปลง:",
         "--column=เลือก", "--column=รหัส", "--column=รูปแบบผลลัพธ์",
         "--height=340", "--width=520"
@@ -146,7 +146,7 @@ def ask_user_choice_zenity(file_info: dict, options: list, filename: str) -> tup
 
 def auto_convert_files(files: list):
     if not files:
-        send_notification("⚡ Smart Auto Convert", "⚠️ ไม่มีไฟล์ที่ถูกเลือก")
+        send_notification("FILE-to-file", "ไม่มีไฟล์ที่ถูกเลือก")
         return
 
     first_file = files[0]
@@ -167,7 +167,7 @@ def auto_convert_files(files: list):
     key, title, module, action = choice
 
     # Invoke module action
-    send_notification("⚡ Smart Auto Convert", f"🔄 กำลังแปลงไฟล์เป็น {key.upper()}...")
+    send_notification("FILE-to-file", f"กำลังแปลงไฟล์เป็น {key.upper()}...")
 
     cmd = [sys.executable, "-m", module, action] + files
     res = subprocess.run(cmd)

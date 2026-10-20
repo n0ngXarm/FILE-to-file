@@ -26,7 +26,7 @@ def show_modern_adwaita_dialog(file_info: dict, options: list, filename: str):
 
             def do_activate(self):
                 win = Adw.ApplicationWindow(application=self)
-                win.set_title("⚡ Smart Auto Convert")
+                win.set_title("Smart Auto Convert")
                 win.set_default_size(740, 600)
                 win.set_modal(True)
 
@@ -40,7 +40,7 @@ def show_modern_adwaita_dialog(file_info: dict, options: list, filename: str):
                 # 1. Header / File Info Group
                 info_group = Adw.PreferencesGroup()
                 info_group.set_title("รายละเอียดไฟล์ที่เลือก")
-                info_group.set_description(f"🔍 ตรวจพบ: <b>{file_info.get('desc', 'Unknown')}</b>")
+                info_group.set_description(f"ตรวจพบ: <b>{file_info.get('desc', 'Unknown')}</b>")
 
                 file_row = Adw.ActionRow()
                 file_row.set_title(f"<span size='large' weight='bold'>{filename}</span>")
@@ -104,10 +104,10 @@ def show_modern_adwaita_dialog(file_info: dict, options: list, filename: str):
                 cancel_btn.connect("clicked", on_cancel)
                 btn_box.append(cancel_btn)
 
-                convert_btn = Gtk.Button(label="🚀 เริ่มแปลงไฟล์ทันที")
+                convert_btn = Gtk.Button(label="เริ่มแปลงไฟล์")
                 convert_btn.add_css_class("suggested-action")
                 convert_btn.add_css_class("pill")
-                convert_btn.set_size_request(200, 48)
+                convert_btn.set_size_request(180, 48)
 
                 def on_convert(btn):
                     selected_result["confirmed"] = True
@@ -143,7 +143,7 @@ def show_fallback_zenity_dialog(file_info: dict, options: list, filename: str):
 
     cmd = [
         "zenity", "--list", "--radiolist",
-        "--title=⚡ Smart Auto Convert",
+        "--title=Smart Auto Convert",
         f"--text=\n<b><big><big>ตรวจพบ: {file_info['desc']}</big></big></b>\nไฟล์: <i><big>{filename}</big></i>\n\n<b>กรุณาเลือกรูปแบบที่ต้องการแปลง:</b>\n",
         "--column=เลือก", "--column=รหัส", "--column=รูปแบบผลลัพธ์",
         "--height=580", "--width=800"

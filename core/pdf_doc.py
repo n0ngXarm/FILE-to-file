@@ -145,7 +145,7 @@ def main():
     action = sys.argv[1]
     files = sys.argv[2:]
 
-    send_notification("📄 FILE-to-file: Document", f"กำลังแปลง {len(files)} ไฟล์เอกสาร...")
+    send_notification("FILE-to-file: Document", f"กำลังแปลง {len(files)} ไฟล์เอกสาร...")
 
     success_count = 0
     errors = []
@@ -153,7 +153,7 @@ def main():
     if action == "images_to_pdf":
         try:
             out = images_to_pdf(files)
-            send_notification("✅ FILE-to-file: Document", f"รวมรูปภาพสำเร็จเป็น PDF:\n{os.path.basename(out)}")
+            send_notification("FILE-to-file: Document", f"รวมรูปภาพสำเร็จเป็น PDF:\n{os.path.basename(out)}")
             return
         except Exception as e:
             show_error_dialog("ข้อผิดพลาดในการรวมรูปภาพเป็น PDF", str(e))
@@ -184,7 +184,7 @@ def main():
     if errors:
         show_error_dialog("ข้อผิดพลาดในการแปลงเอกสาร", "\n".join(errors))
     else:
-        send_notification("✅ FILE-to-file: Document", f"แปลงเอกสารสำเร็จ {success_count} ไฟล์เรียบร้อยแล้ว!")
+        send_notification("FILE-to-file: Document", f"แปลงเอกสารสำเร็จ {success_count} ไฟล์เรียบร้อยแล้ว")
 
 if __name__ == "__main__":
     main()
